@@ -1,0 +1,42 @@
+//express = ajuda a interpretar os caminhos e retornar executando a tarefa
+//npx = serve para executar um pacote que foi instalado
+
+//tipos de requisiçoes
+//get() buscar informações do back
+//post() criar nova info no back 
+//put() atualizar info ja existente no back
+//delete() deletar info 
+
+//tipos de parametros
+//request param = vem na propria rota que identificam um recurso (quando for mexer em apenas 1 usuario por ex)
+//query param = vem na rota e geralmente sao opcionais para filtro, paginaçao ex
+//request body = parametros para criaçao e atualização
+
+exemplos 
+
+app.get('/users', (req, res) => {
+    const search = String(req.query.search)
+
+    const filteredUsers =search ? users.filter(user => user.includes(search)) : users
+    //JSON
+    return res.json(filteredUsers)
+})
+
+app.get('/users/:id', (req, res) => {
+    const id = Number(req.params.id)
+
+    const user = users[id]
+
+    return res.json(user)
+})
+
+app.post('/users', (req, res) => {
+    const data = req.body
+
+    const user = {
+        name: data.name,
+        email: data.email,
+    }
+
+    return res.json(user)
+})
