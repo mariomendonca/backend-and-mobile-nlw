@@ -2,6 +2,43 @@ import {Request, Response} from 'express'
 import knex from '../database/connection'
 
 export default class PointsController {
+    async index(req: Request, res: Response) {
+        //query params = filtros
+        const { city, uf} = req.query
+
+        //const parsedItems = String(items).split(',').map(item => item.trim())
+        //serve para transformar os items em array
+
+        const points = await knex('points')
+          .join('point_items', 'point.id', '=', 'point_item.point_id')
+          .where('city', String(city))
+          .where('uf', String(uf))
+          .distinct()
+          .select('points.*')
+
+        console.log(city, uf)
+        return res.json(points)
+    }
+  
+    async show(req: Request, res:Response) {
+        const { id } = req.params
+
+        const point = await knex('points').where('id', id).first()
+
+        if (!point) {
+            return res.status(400).json({ message: 'Point not found.' })
+        }
+
+        // const items = await knex('items')
+        //   .join('point_items', 'item.id', '=', 'point_items.item_id')
+        //   .where('point_items.point_id', id)
+        //   .select('items.title')
+
+
+        return res.json(point)
+        // return res.json({ point, items})
+    }
+    
     async create(req: Request, res: Response) {
         const {
             name,
