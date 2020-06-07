@@ -12,6 +12,12 @@
 //query param = vem na rota e geralmente sao opcionais para filtro, paginaçao ex
 //request body = parametros para criaçao e atualização
 
+//abrir banco de dados no vscode cntl + shift + p (open database)
+
+
+// knex transaction = o async await so vao funcionar se tudo for, se algo falhar ele para tudo
+
+//patherns (estrutura de pastas) estudar sobre isso
 exemplos 
 
 app.get('/users', (req, res) => {
